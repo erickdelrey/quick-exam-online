@@ -1,49 +1,126 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>exam.online</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/view-exam.css" />
-    <script type="text/javascript" src="lib/js/jquery.min.js"></script>
-</head>
-<body>
-    <div>
-        <input type="button" value="SELECT" id="viewExam" />
-    </div>
-    <?php include("view-exam.php") ?>
-    <script>
-        // $(document).on("contextmenu", function (e) {        
-        //     e.preventDefault();
-        // });
-        // $(document).keydown(function (event) {
-        //     if (event.keyCode === 123 ||  // Prevent F12
-        //         (event.ctrlKey && event.shiftKey && event.keyCode === 73)  // Prevent Ctrl+Shift+I  
-        //     ) { // Prevent F12
-        //         return false;
-        //     }
-        // });
-        $(document).ready(function(){
-            $("#viewExamContainer").hide();
-            $("#viewExam").click(function(e){
-                e.preventDefault();
-                var elem = document.getElementById("viewExamContainer");
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) { /* Safari */
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE11 */
-                    elem.msRequestFullscreen();
-                }
-                $("#viewExamContainer").show();
-            });
+<?php
+include("includes/config.php");
+include("includes/classes/Account.php");
+include("includes/classes/Constants.php");
 
-            document.addEventListener("keydown", function(event) {
-                const key = event.key; // Or const {key} = event; in ES6+
-                if (key === "Escape") {
-                    alert("Escape is not allowed!");
-                    return false;
-                }
+$account = new Account($con);
+
+include("includes/handlers/register-handler.php");
+include("includes/handlers/login-handler.php");
+
+function getInputValue($name)
+{
+    if (isset($_POST[$name])) {
+        echo $_POST[$name];
+    }
+}
+?>
+
+<html>
+
+<head>
+    <title>Welcome to Quick Exam Online!</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/register.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="assets/js/register.js"></script>
+</head>
+
+<body>
+    <?php
+
+    if (isset($_POST['registerButton'])) {
+        echo '<script>
+            $(document).ready(function() {
+                $("#loginForm").hide();
+                $("#registerForm").show();
             });
-        });
-    </script>
+        </script>';
+    } else {
+        echo '<script>
+            $(document).ready(function() {
+                $("#loginForm").show();
+                $("#registerForm").hide();
+            });
+        </script>';
+    }
+
+    ?>
+    <div id="background">
+        <div id="loginContainer">
+            <div id="inputContainer">
+                <form id="loginForm" method="POST" action="index.php">
+                    <h2>Login to your account</h2>
+                    <p>
+                        <?php echo $account->getError(Constants::$LOGIN_FAIL) ?>
+                        <label for="loginUsername">Username</label>
+                        <input id="loginUsername" name="loginUsername" type="text" placeholder="e.g. bartSimposon" required required value="<?php getInputValue('loginUsername') ?>"></p>
+                    <p>
+                        <label for="loginPassword">Password</label>
+                        <input id="loginPassword" name="loginPassword" type="password" placeholder="Your password" required>
+                    </p>
+                    <button type="submit" name="loginButton">LOG IN</button>
+                    <div class="hasAccountText">
+                        <span id="hideLogin">Don't have any account yet? Signup here.</span>
+                    </div>
+                </form>
+
+                <form id="registerForm" method="POST" action="index.php">
+                    <h2>Create your free account</h2>
+                    <p>
+                        <?php echo $account->getError(Constants::$USERNAME_INVALID_LENGTH) ?>
+                        <?php echo $account->getError(Constants::$USERNAME_TAKEN) ?>
+                        <label for="username">Username</label>
+                        <input id="username" name="username" type="text" placeholder="e.g. bartSimposon" required value="<?php getInputValue('username') ?>">
+                    </p>
+                    <p>
+                        <?php echo $account->getError(Constants::$FIRSTNAME_INVALID_LENGTH) ?>
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" name="firstName" type="text" placeholder="e.g. Bart" required value="<?php getInputValue('firstName') ?>">
+                    </p>
+                    <p>
+                        <?php echo $account->getError(Constants::$LASTNAME_INVALID_LENGTH) ?>
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" name="lastName" type="text" placeholder="e.g. Simpson" required value="<?php getInputValue('lastName') ?>">
+                    </p>
+                    <p>
+                        <?php echo $account->getError(Constants::$EMAIL_INVALID) ?>
+                        <?php echo $account->getError(Constants::$EMAIL_DONT_MATCH) ?>
+                        <?php echo $account->getError(Constants::$EMAIL_TAKEN) ?>
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="e.g. bart@gmail.com" required value="<?php getInputValue('email') ?>">
+                    </p>
+                    <p>
+                        <label for="email2">Confirm email</label>
+                        <input id="email2" name="email2" type="email" placeholder="e.g. bart@gmail.com" required required value="<?php getInputValue('email2') ?>">
+                    </p>
+                    <p>
+                        <?php echo $account->getError(Constants::$PASSWORD_INVALID_LENGTH) ?>
+                        <?php echo $account->getError(Constants::$PASSWORD_NOT_ALPHANUMERIC) ?>
+                        <?php echo $account->getError(Constants::$PASSWORDS_DO_NOT_MATCH) ?>
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Your password" required>
+                    </p>
+                    <p>
+                        <label for="password2">Confirm password</label>
+                        <input id="password2" name="password2" type="password" placeholder="Your password" required>
+                    </p>
+                    <button type="submit" name="registerButton">SIGN UP</button>
+                    <div class="hasAccountText">
+                        <span id="hideRegister">Already have an account? Log in here.</span>
+                    </div>
+                </form>
+            </div>
+            <div id="loginText">
+                <h1>Expand your knowledge!</h1>
+                <h2>Quiz yourself for free</h2>
+                <ul>
+                    <li>Create an exam seamlessly</li>
+                    <li>Focus on answering an exam</li>
+                    <li>Enjoy learning!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

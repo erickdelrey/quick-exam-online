@@ -1,0 +1,80 @@
+html, 
+body {
+	padding: 0;
+	margin: 0;
+    height: 100%;
+    font-family: Roboto;
+}
+
+.carousel-caption {
+    position: static !important;
+}
+
+.carousel-inner {
+    overflow: visible !important;
+}
+
+.carousel-caption {
+    border-style: solid;
+}
+
+.questionLink {
+    width: 50px !important;
+    margin: 1px !important;
+    border-radius: 0px !important;
+}
+
+.row {
+    text-align: center;
+    padding: 30px;
+}
+
+.questionDescription {
+    text-align: justify;
+    padding-right: 180px;
+    padding-left: 180px;
+    padding-bottom: 30px;
+    font-size: 30px;
+}
+
+.choices {
+    text-align: left;
+    padding-left: 180px;
+    padding-right: 180px;
+    font-size: 30px;
+}
+
+.carousel-control-prev {
+    margin-left: -100px;
+}
+
+.carousel-control-next {
+    margin-right: -100px;
+}
+
+.carousel-item {
+    margin-left: 80px;
+    margin-right: 80px !important;
+}
+
+body {
+	background-color: #FFF;
+    background-image: url(../images/pencil-bg.jpg);
+    background-position: center;
+    background-size: cover;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    background-color: #FFF;
+    margin-top: 100px;
+    border-style: solid;
+    border-radius: 30px;
+}
+.carousel-caption {
+    color: #303F9F !important;
+    border-style: none;
+    width: 85%;
+}
