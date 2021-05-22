@@ -28,3 +28,11 @@ body {
 header nav .navbar-nav {
     margin-right: auto !important;
 }
+
+.padding-30 {
+    padding: 30px;
+}
+
+.padding-0 {
+    padding: 0 !important;
+}

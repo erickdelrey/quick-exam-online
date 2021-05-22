@@ -42,7 +42,7 @@ if (isset($_POST['answerExam'])) {
                         <div class="col-sm-9">
                             <h2 class="display-5 fw-bold">Welcome Test Taker!</h2>
                             <p class="fs-4">To get started, search for the exam using it's ID or choose from the list of exams available to you.</p>
-                            <p>Don't forget to answer the <a href="#" target="_blank">Usability Survery.</a></p>
+                            <p>Don't forget to answer the <a href="#" target="_blank">Usability Survey after taking an exam.</a></p>
                             <blockquote class="blockquote text-right">
                                 <p class="mb-0">A little knowledge is a dangerous thing.</p>
                                 <footer class="blockquote-footer">Alexander Pope in <cite title="Source Title">An Essay on Criticism </cite></footer>
