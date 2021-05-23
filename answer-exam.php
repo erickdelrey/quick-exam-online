@@ -155,7 +155,8 @@ if (isset($_POST['submitAnswer'])) {
                                                     $questionClass = new Question($con);
                                                     $questionClass->getQuestion($question['questionID']);
                                                     $choices = $questionClass->getChoices();
-                                                    echo "<div class='padding-30'><div class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</div>";
+                                                    echo "<div class='padding-30'>";
+                                                    echo "<div class='questionDescription'>Question " . $counter +1 . ": " . $question['description'] . "</div>";
                                                     foreach ($choices as $choice) {
                                                         echo "<div class='choices'>
                                                                 <input type='radio' 
