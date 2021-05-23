@@ -14,7 +14,7 @@
                         }
                     ?>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="https://docs.google.com/forms/d/e/1FAIpQLSfyKNM_ilcYKR4ZvEJx3_lyZuQ8tgA7xU5WrjXTkL4VlpME4A/viewform">Usability Survey</a>
+                        <a class="nav-link text-white" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfyKNM_ilcYKR4ZvEJx3_lyZuQ8tgA7xU5WrjXTkL4VlpME4A/viewform">Usability Survey</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">About</a>
