@@ -99,9 +99,10 @@ if (!isset($_SESSION['userLoggedIn'])) {
                                 $questionClass->getQuestion($questionID);
                                 $choices = $questionClass->getChoices();
                                 echo "<div class='padding-top-30'>";
-                                    echo "<h2>";
-                                    echo "Question " . $counter + 1 . ": " . $question['description'];
-                                    echo "</h2>";
+                                    echo "<h5>";
+                                    echo "Question " . $counter + 1;
+                                    echo ": " . $question['description'];
+                                    echo "</h5>";
                                         if (in_array($questionID, $correctAnswers)) {
                                             echo "<img src='assets/images/icons/correct.png' alt='correct'/>";
                                         } else if ($wrongAnswersMap[$questionID]) {

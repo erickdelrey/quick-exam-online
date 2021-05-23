@@ -156,7 +156,7 @@ if (isset($_POST['submitAnswer'])) {
                                                     $questionClass->getQuestion($question['questionID']);
                                                     $choices = $questionClass->getChoices();
                                                     echo "<div class='padding-30'>";
-                                                        echo "<div class='questionDescription'>Question ";
+                                                        echo "<div class='questionDescription padding-bottom-20'>Question ";
                                                         echo $counter +1 . ": " . $question['description'];
                                                         echo "</div>";
                                                     foreach ($choices as $choice) {
