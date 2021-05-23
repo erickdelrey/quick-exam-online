@@ -11,11 +11,7 @@ $exam = null;
 $questions = null;
 $choices = null;
 
-if (isset($_SESSION['userLoggedIn'])) {
-    if (!$_SESSION['userRoleLoggedIn'] == 'TEST_CREATOR') {
-        header("Location: index.php");
-    }
-} else {
+if (!isset($_SESSION['userLoggedIn'])) {
     header("Location: index.php");
 }
 
