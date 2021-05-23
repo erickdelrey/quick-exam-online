@@ -139,53 +139,54 @@ if (isset($_POST['submitAnswer'])) {
                 echo $message;
             } else {
                 echo "
-                <form method='POST' action='' id='answerExamBody'>
-                <div class='container py-4'>
-                    <div class='row'>
-                        <div class='col-md-12 py-4 padding-top-50 padding-bottom-50 '>
-                            <div class='row padding-bottom-50'>
-                                <h2 id='examName'>" . $exam->getExamName() . "</h2>
-                                <input type='hidden' value='" . $exam->getExamID() . "' name='examID' />
-                            </div>
-                            <div class='row bg-light rounded text-center'>
-                                <div class='col'>
-                                    <div class='slider'>";
-                                        $counter = 0;
-                                        foreach ($questions as $question) {
-                                            $questionClass = new Question($con);
-                                            $questionClass->getQuestion($question['questionID']);
-                                            $choices = $questionClass->getChoices();
-                                            echo "<div class='padding-30'><p class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</p>";
-                                            foreach ($choices as $choice) {
-                                                echo "<p class='choices'><input type='radio' class='form-check-input' name='answers[" . $question['questionID'] . "]' id='choice-" . $choice['choiceID'] . "' value='" . $choice['choiceID'] . "'
-                                                                            onClick='updateQuestionButtonStatus(" . $counter . ")'/><label for='choice-" . $choice['choiceID'] . "'>" . $choice['description'] . "</label></p>";
-                                            }
-                                            $counter++;
+                <div id='answerExamBody'>
+                    <form method='POST' action=''>
+                        <div class='container py-4'>
+                            <div class='row'>
+                                <div class='col-md-12 py-4 padding-top-50 padding-bottom-50 '>
+                                    <div class='row padding-bottom-50'>
+                                        <h2 id='examName'>" . $exam->getExamName() . "</h2>
+                                        <input type='hidden' value='" . $exam->getExamID() . "' name='examID' />
+                                    </div>
+                                    <div class='row bg-light rounded text-center'>
+                                        <div class='col'>
+                                            <div class='slider'>";
+                                                $counter = 0;
+                                                foreach ($questions as $question) {
+                                                    $questionClass = new Question($con);
+                                                    $questionClass->getQuestion($question['questionID']);
+                                                    $choices = $questionClass->getChoices();
+                                                    echo "<div class='padding-30'><p class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</p>";
+                                                    foreach ($choices as $choice) {
+                                                        echo "<p class='choices'><input type='radio' class='form-check-input' name='answers[" . $question['questionID'] . "]' id='choice-" . $choice['choiceID'] . "' value='" . $choice['choiceID'] . "'
+                                                                                    onClick='updateQuestionButtonStatus(" . $counter . ")'/><label for='choice-" . $choice['choiceID'] . "'>" . $choice['description'] . "</label></p>";
+                                                    }
+                                                    $counter++;
+                                                    echo "</div>";
+                                                }
                                             echo "</div>";
+                                        echo "</div>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                echo "</div>";
+                            echo "<div class='row'>";
+                                echo "<div class='col-md-6 answerContainer padding-right-30'>";
+                                    echo "<div class='padding-30 bg-light min-height-100 rounded'>";
+                                        for ($x = 0; $x < $counter; $x++) {
+                                            echo "<button type='button' id='questionLink-" . $x . "' onClick='slideToQuestion(" . $x . ")' class='questionLink btn btn-secondary'>" . ($x + 1) . "</button>";
                                         }
                                     echo "</div>";
                                 echo "</div>";
-                            echo "</div>";
-                            echo "</div>";
-                        echo "</div>";
-                    echo "<div class='row'>";
-                        echo "<div class='col-md-6 answerContainer padding-right-30'>";
-                            echo "<div class='padding-30 bg-light min-height-100 rounded'>";
-                                for ($x = 0; $x < $counter; $x++) {
-                                    echo "<button type='button' id='questionLink-" . $x . "' onClick='slideToQuestion(" . $x . ")' class='questionLink btn btn-secondary'>" . ($x + 1) . "</button>";
-                                }
+                                echo "<div class='col-md-6 answerContainer'>";
+                                    echo "<div class='padding-30 bg-light min-height-100 rounded'>";
+                                        echo "<button type='submit' class='btn btn-primary' name='submitAnswer'>SUBMIT ANSWER</button>";
+                                    echo "</div>";
                                 echo "</div>";
                             echo "</div>";
-                        echo "<div class='col-md-6 answerContainer'>";
-                            echo "<div class='padding-30 bg-light min-height-100 rounded'>";
-                                echo "<div id='counter'></div>";
-                                echo "<button type='submit' class='btn btn-primary' name='submitAnswer'>SUBMIT ANSWER</button>";
-                            echo "</div>";
                         echo "</div>";
-                    echo "</div>";
-                echo "</div>";
+                    echo "</form>";
                 include("includes/footer.php");
-                echo "</form>";
+                echo "</div>";
             }
         ?>
     </main>
