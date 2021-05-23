@@ -103,12 +103,12 @@ if (!isset($_SESSION['userLoggedIn'])) {
                                     echo "Question ";
                                     echo $counter + 1;
                                     echo ": " . $question['description'];
-                                    echo "</h5>";
                                         if (in_array($questionID, $correctAnswers)) {
                                             echo "<img src='assets/images/icons/correct.png' alt='correct'/>";
                                         } else if ($wrongAnswersMap[$questionID]) {
                                             echo "<img src='assets/images/icons/wrong.png' alt='wrong'/>";
                                         }
+                                    echo "</h5>";
                                 echo "</div>";
                                 echo "<ul class='list-group'>";
                                 foreach ($choices as $choice) {
