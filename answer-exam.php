@@ -66,13 +66,13 @@ if (isset($_POST['submitAnswer'])) {
     <link rel="icon" href="assets/images/logo-icon.png" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/answer-exam.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
     <?php include("includes/roboto.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="assets/js/answer-exam.js"></script>
     <?php include("includes/bootstrap.php") ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/answer-exam.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+    <script src="assets/js/answer-exam.js"></script>
 </head>
 
 <body>
@@ -117,7 +117,7 @@ if (isset($_POST['submitAnswer'])) {
                         <h5 class="modal-title" id="exampleModalLabel">Exam Reminder</h5>
                     </div>
                     <div class="modal-body">
-                        Starting the exam will take your screen into full-screen mode. You can move the ← and → arrow keys to jump from one question to another.
+                        Starting the exam will take your screen into full-screen mode.
                     </div>
                     <div class="modal-footer">
                         <form id="startExamForm" method="POST">

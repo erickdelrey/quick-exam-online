@@ -23,8 +23,8 @@ function getInputValue($name)
     <link rel="icon" href="assets/images/logo-icon.png" sizes="32x32" type="image/png">
     <?php include("includes/roboto.php") ?>
     <?php include("includes/bootstrap.php") ?>
-    <link rel="stylesheet" type="text/css" href="assets/css/register.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/register.css" />
     <script src="assets/js/register.js"></script>
 </head>
 

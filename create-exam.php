@@ -20,9 +20,9 @@ if (isset($_SESSION['userLoggedIn'])) {
 <head>
     <title>Create Exam | Quick Exam Online</title>
     <link rel="icon" href="assets/images/logo-icon.png" sizes="32x32" type="image/png">
-    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
     <?php include("includes/roboto.php") ?>
     <?php include("includes/bootstrap.php") ?>
+    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
 </head>
 
 <body>

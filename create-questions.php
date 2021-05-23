@@ -16,11 +16,11 @@ include("includes/handlers/create-questions-handler.php")
 <head>
     <title>Create Questions | Quick Exam Online</title>
     <link rel="icon" href="assets/images/logo-icon.png" sizes="32x32" type="image/png">
-    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/create-questions.js"></script>
     <?php include("includes/bootstrap.php") ?>
     <?php include("includes/roboto.php") ?>
+    <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+    <script type="text/javascript" src="assets/js/create-questions.js"></script>
 </head>
 
 <body>
