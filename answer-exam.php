@@ -117,7 +117,7 @@ if (isset($_POST['submitAnswer'])) {
                         <h5 class="modal-title" id="exampleModalLabel">Exam Reminder</h5>
                     </div>
                     <div class="modal-body">
-                        Starting the exam will take your screen into full-screen mode.
+                        Starting the exam will take your screen into full-screen mode. You can move the left and right arrow keys to jump from 1 question to another.
                     </div>
                     <div class="modal-footer">
                         <form id="startExamForm" method="POST">
