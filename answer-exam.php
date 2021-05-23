@@ -138,8 +138,7 @@ if (isset($_POST['submitAnswer'])) {
             if ($message != "") {
                 echo $message;
             } else {
-                echo "
-                <div id='answerExamBody'>
+                echo "<div id='answerExamBody'>
                     <form method='POST' action=''>
                         <div class='container py-4'>
                             <div class='row'>
@@ -156,10 +155,17 @@ if (isset($_POST['submitAnswer'])) {
                                                     $questionClass = new Question($con);
                                                     $questionClass->getQuestion($question['questionID']);
                                                     $choices = $questionClass->getChoices();
-                                                    echo "<div class='padding-30'><p class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</p>";
+                                                    echo "<div class='padding-30'><div class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</div>";
                                                     foreach ($choices as $choice) {
-                                                        echo "<p class='choices'><input type='radio' class='form-check-input' name='answers[" . $question['questionID'] . "]' id='choice-" . $choice['choiceID'] . "' value='" . $choice['choiceID'] . "'
-                                                                                    onClick='updateQuestionButtonStatus(" . $counter . ")'/><label for='choice-" . $choice['choiceID'] . "'>" . $choice['description'] . "</label></p>";
+                                                        echo "<div class='choices'>
+                                                                <input type='radio' 
+                                                                class='form-check-input' 
+                                                                name='answers[" . $question['questionID'] . "]' 
+                                                                id='choice-" . $choice['choiceID'] . "' 
+                                                                value='" . $choice['choiceID'] . "'
+                                                                onClick='updateQuestionButtonStatus(" . $counter . ")'/>
+                                                                <label for='choice-" . $choice['choiceID'] . "'>" . $choice['description'] . "</label>
+                                                            </div>";
                                                     }
                                                     $counter++;
                                                     echo "</div>";
@@ -167,8 +173,8 @@ if (isset($_POST['submitAnswer'])) {
                                             echo "</div>";
                                         echo "</div>";
                                     echo "</div>";
-                                    echo "</div>";
                                 echo "</div>";
+                            echo "</div>";
                             echo "<div class='row'>";
                                 echo "<div class='col-md-6 answerContainer padding-right-30'>";
                                     echo "<div class='padding-30 bg-light min-height-100 rounded'>";
