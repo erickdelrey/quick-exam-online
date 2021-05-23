@@ -100,7 +100,8 @@ if (!isset($_SESSION['userLoggedIn'])) {
                                 $choices = $questionClass->getChoices();
                                 echo "<div class='padding-top-30'>";
                                     echo "<h5>";
-                                    echo "Question " . $counter + 1;
+                                    echo "Question ";
+                                    echo $counter + 1;
                                     echo ": " . $question['description'];
                                     echo "</h5>";
                                         if (in_array($questionID, $correctAnswers)) {
