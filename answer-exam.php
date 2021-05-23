@@ -139,7 +139,7 @@ if (isset($_POST['submitAnswer'])) {
                 echo $message;
             } else {
                 echo "<div id='answerExamBody'>
-                    <form method='POST' action=''>
+                    <form method='POST'>
                         <div class='container py-4'>
                             <div class='row'>
                                 <div class='col-md-12 py-4 padding-top-50 padding-bottom-50 '>
