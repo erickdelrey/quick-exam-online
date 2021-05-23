@@ -98,13 +98,14 @@ if (!isset($_SESSION['userLoggedIn'])) {
                                 $questionID = $question['questionID'];
                                 $questionClass->getQuestion($questionID);
                                 $choices = $questionClass->getChoices();
-                                echo "<p class='padding-top-30'>Question " . $counter + 1 . ": " . $question['description'];
+                                echo "<div class='padding-top-30'>";
+                                echo "<h2>Question " . $counter + 1 . ": " . $question['description']."</h2>";
                                 if (in_array($questionID, $correctAnswers)) {
                                     echo "<img src='assets/images/icons/correct.png' alt='correct'/>";
                                 } else if ($wrongAnswersMap[$questionID]) {
                                     echo "<img src='assets/images/icons/wrong.png' alt='wrong'/>";
                                 }
-                                echo "</p>";
+                                echo "</div>";
                                 echo "<ul class='list-group'>";
                                 foreach ($choices as $choice) {
                                     echo "<li class='list-group-item ";

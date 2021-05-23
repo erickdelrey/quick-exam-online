@@ -162,6 +162,7 @@ if (isset($_POST['submitAnswer'])) {
                                                     foreach ($choices as $choice) {
                                                         echo "<div class='choices'>
                                                                 <input type='radio' 
+                                                                required
                                                                 class='form-check-input' 
                                                                 name='answers[" . $question['questionID'] . "]' 
                                                                 id='choice-" . $choice['choiceID'] . "' 
