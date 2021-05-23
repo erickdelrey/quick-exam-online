@@ -54,7 +54,7 @@ if (isset($_SESSION['userLoggedIn'])) {
                         <div class="col-sm-9">
                             <h2 class="display-5 fw-bold">Welcome <?php echo $loggedInUsername; ?>!</h2>
                             <p class="fs-4">To get started, search for the exam using its ID (Chemistry's Exam ID is <b>4</b>) or choose from the list of exams available to you.</p>
-                            <p>Don't forget to answer the <a href="#" target="_blank">Usability Survey after taking an exam.</a></p>
+                            <p>Don't forget to answer the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyKNM_ilcYKR4ZvEJx3_lyZuQ8tgA7xU5WrjXTkL4VlpME4A/viewform" target="_blank">Usability Survey after taking an exam.</a></p>
                             <blockquote class="blockquote text-right">
                                 <p class="mb-0">A little knowledge is a dangerous thing.</p>
                                 <footer class="blockquote-footer">Alexander Pope in <cite title="Source Title">An Essay on Criticism </cite></footer>
