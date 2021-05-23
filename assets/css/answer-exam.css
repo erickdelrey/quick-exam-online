@@ -1,12 +1,31 @@
 #answerExamBody {
     background-color: #FFF;
-    background-image: url(../images/bg1.jpg);
+    background-image: url(../images/bg3.jpg);
     background-position: center;
     background-size: cover;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: "Roboto";
 }
 
 .slick-prev:before, .slick-next:before {
     color: black;
     font-size: 40px;
+}
+
+#examName {
+    font-size: 50px;
+    color: white;
+    padding-top: 100px;
+}
+
+.questionDescription {
+    font-size: 30px;
+}
+
+.answerContainer {
+    padding: 0px !important;
+}
+
+.questionLink {
+    border-radius: 0 !important;
+    margin-right: 10px;
 }

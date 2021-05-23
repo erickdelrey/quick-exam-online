@@ -12,7 +12,7 @@ if (isset($_POST['createExam'])) {
     $examType = sanitizeInputText($_POST['examType']);
     $choicesCount = sanitizeInputText($_POST['choicesCount']);
 
-    $userID = $_SESSION['userID'];
+    $userID = $_SESSION['userLoggedIn'];
 
     $exam->createExam(
         $examName,

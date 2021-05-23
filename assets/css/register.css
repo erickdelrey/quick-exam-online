@@ -7,7 +7,7 @@ body {
 
 #background {
 	background-color: #000;
-    background-image: url(../images/bg.jpg);
+    background-image: url(../images/bg5.jpg);
     background-position: center;
     background-size: cover;
     display: table;
@@ -17,7 +17,7 @@ body {
 
 #loginContainer * {
 	color: #fff;
-	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-family: "Roboto";
 	font-weight: normal;
 	line-height: 1em;
 	box-sizing: border-box;
@@ -69,20 +69,22 @@ body {
     height: 27px;
     line-height: 27px;
     width: 100%;
+    color: black;
+    font-size: 15px;
 }
 
 #inputContainer label {
-	color: #a0a0a0;
+	color: black;
     font-size: 13px;
     margin-top: 15px;
     display: block;
 }
 
 #inputContainer button {
-	background-color: transparent;
-    border: 2px solid #fff;
+	background-color: white;
+    border: 2px solid white;
     border-radius: 250px;
-    color: #fff;
+    color: black;
     display: block;
     font-size: 14px;
     letter-spacing: 1px;
@@ -116,9 +118,10 @@ body {
 }
 
 #loginText h1 {
-    color: #303F9F;
+    color: #fff;
     font-size: 60px;
     font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 #loginText h2 {
@@ -137,7 +140,14 @@ body {
 }
 
 #inputContainer .errorMessage {
-    color: #303F9F;
+    color: maroon;
     font-size: 12px;
     display: block;
+}
+
+#footerText {
+    color: #FFF;
+    margin: 0;
+    text-align: center;
+    min-width: 100%;
 }

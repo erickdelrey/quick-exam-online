@@ -5,11 +5,20 @@ include("includes/classes/Question.php");
 include("includes/classes/Choice.php");
 include("includes/classes/ExamResult.php");
 $examIDtoTake = $_GET["examIDtoTake"];
+$userID = $_SESSION['userLoggedIn'];
 $message = "";
 $exam = null;
 $questions = null;
 $choices = null;
-$examResult = null;
+
+if (isset($_SESSION['userLoggedIn'])) {
+    if (!$_SESSION['userRoleLoggedIn'] == 'TEST_CREATOR') {
+        header("Location: index.php");
+    }
+} else {
+    header("Location: index.php");
+}
+
 if (!empty($examIDtoTake)) {
     $exam = new Exam($con);
     $exam->retrieveExam($examIDtoTake);
@@ -17,14 +26,19 @@ if (!empty($examIDtoTake)) {
     if ($exam->getExamID() == null) {
         $message = "No Exam retrieved";
     } else {
-        $questions = $exam->getQuestions();
+        $questions = $exam->getQuestions($exam->getExamID());
     }
 } else {
-    $message = "No Exam ID";
+    header("Location: dashboard.php");
+}
+
+$examResult = new ExamResult($con);
+$examResult->retrieveExamResult($userID, $examIDtoTake);
+if ($examResult->isFinished()) {
+    header("Location: dashboard.php");
 }
 
 if (isset($_POST['submitAnswer'])) {
-    $userID = $_SESSION['userID'];
     $examID = $_POST['examID'];
     $answers = $_POST['answers'];
     $correctAnswerCount = 0;
@@ -43,8 +57,8 @@ if (isset($_POST['submitAnswer'])) {
         }
     }
     $percentage = ($correctAnswerCount / ($correctAnswerCount + $wrongAnswerCount)) * 100;
-    $examResult = new ExamResult($con);
-    echo $examResult->saveExamResult($userID, $examID, $correctAnswerCount, $correctAnswers, $wrongAnswerCount, $wrongAnswers, $percentage);
+    $examResult->saveExamResult($userID, $examID, $correctAnswerCount, $correctAnswers, $wrongAnswerCount, $wrongAnswers, $percentage);
+    header("Location: show-answers.php?examID=$examID");
 }
 ?>
 
@@ -69,6 +83,37 @@ if (isset($_POST['submitAnswer'])) {
     <?php include("includes/header.php") ?>
     <main>
         <!-- Modal -->
+        <script>
+            $(document).ready(function(){
+                $("#startExamModalButton").click(function(e){
+                    e.preventDefault();
+                    var examID = $("#modalExamID").val();
+                    var userID = $("#userLoggedIn").val();
+                
+                    $.ajax({
+                        url:'includes/handlers/create-exam-result-handler.php',
+                        type:'post',
+                        data:{examID:examID, userID:userID},
+                        success:function(response){
+                             $('#answerExamBody').show();
+                             //$('#reminderModal').modal('hide');
+                            var elem = document.getElementById('answerExamBody');
+                            if (elem.requestFullscreen) {
+                                elem.requestFullscreen();
+                            } else if (elem.webkitRequestFullscreen) {
+                                elem.webkitRequestFullscreen();
+                            } else if (elem.msRequestFullscreen) {
+                                elem.msRequestFullscreen();
+                            }
+                        },
+                        failure:function(response){
+                            console.log(response);
+                        }
+                    });
+                });
+            });
+        </script>
+
         <div id="reminderModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -79,21 +124,17 @@ if (isset($_POST['submitAnswer'])) {
                         Starting the exam will take your screen into full-screen mode.
                     </div>
                     <div class="modal-footer">
-                        <a href="/quick-exam-online/dashboard.php" class="btn btn-secondary" role="button">Go back to Home</a>
-                        <button type="button" class="btn btn-primary" id="startExamModalButton">Start Exam</button>
+                        <form id="startExamForm" method="POST">
+                            <input type="hidden" value="<?php echo $userID; ?>" name='userLoggedIn' id="userLoggedIn" />
+                            <input type="hidden" value="<?php echo $exam->getExamID(); ?>" name='modalExamID'id="modalExamID" />
+                            <a href="/quick-exam-online/dashboard.php" class="btn btn-secondary" role="button">Go back to Home</a>
+                            <input type="submit" class="btn btn-primary" name="startExamModalButton" id="startExamModalButton" value="Start Exam" />
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <?php
-        if ($examResult != null && $examResult->getExamResultID() != null) {
-            echo "examID: " . $examResult->getExamID() . "<br/>";
-            echo "correctAnswerCount: " . $examResult->getCorrectAnswersCount() . "<br/>";
-            echo "correctAnswers: " . $examResult->getCorrectAnswers() . "<br/>";
-            echo "wrongAnswerCount: " . $examResult->getWrongAnswersCount() . "<br/>";
-            echo "wrongAnswers: " . $examResult->getWrongAnswers() . "<br/>";
-            echo "percentage: " . $examResult->getPercentage() . "<br/>";
-        } else {
             if ($message != "") {
                 echo $message;
             } else {
@@ -101,9 +142,9 @@ if (isset($_POST['submitAnswer'])) {
                 <form method='POST' action='' id='answerExamBody'>
                 <div class='container py-4'>
                     <div class='row'>
-                        <div class='col-md-12 py-4'>
-                            <div class='row'>
-                                <h2>" . $exam->getExamName() . "</h2>
+                        <div class='col-md-12 py-4 padding-top-50 padding-bottom-50 '>
+                            <div class='row padding-bottom-50'>
+                                <h2 id='examName'>" . $exam->getExamName() . "</h2>
                                 <input type='hidden' value='" . $exam->getExamID() . "' name='examID' />
                             </div>
                             <div class='row bg-light rounded text-center'>
@@ -114,7 +155,7 @@ if (isset($_POST['submitAnswer'])) {
                                             $questionClass = new Question($con);
                                             $questionClass->getQuestion($question['questionID']);
                                             $choices = $questionClass->getChoices();
-                                            echo "<div class='padding-30'><p class='questionDescription'>" . $question['description'] . "</p>";
+                                            echo "<div class='padding-30'><p class='questionDescription'> Question " . $counter +1 . ": " . $question['description'] . "</p>";
                                             foreach ($choices as $choice) {
                                                 echo "<p class='choices'><input type='radio' class='form-check-input' name='answers[" . $question['questionID'] . "]' id='choice-" . $choice['choiceID'] . "' value='" . $choice['choiceID'] . "'
                                                                             onClick='updateQuestionButtonStatus(" . $counter . ")'/><label for='choice-" . $choice['choiceID'] . "'>" . $choice['description'] . "</label></p>";
@@ -127,18 +168,18 @@ if (isset($_POST['submitAnswer'])) {
                             echo "</div>";
                             echo "</div>";
                         echo "</div>";
-                    echo "<div class='row align-items-md-stretch'>";
-                        echo "<div class='col-md-6'>";
-                            echo "<div class='p-3 bg-light min-height-430 rounded'>";
+                    echo "<div class='row'>";
+                        echo "<div class='col-md-6 answerContainer padding-right-30'>";
+                            echo "<div class='padding-30 bg-light min-height-100 rounded'>";
                                 for ($x = 0; $x < $counter; $x++) {
-                                    echo "<button type='button' id='questionLink-" . $x . "' onClick='slideToQuestion(" . $x . ")' class='btn btn-secondary'>" . ($x + 1) . "</button>";
+                                    echo "<button type='button' id='questionLink-" . $x . "' onClick='slideToQuestion(" . $x . ")' class='questionLink btn btn-secondary'>" . ($x + 1) . "</button>";
                                 }
                                 echo "</div>";
                             echo "</div>";
-                        echo "<div class='col-md-6'>";
-                            echo "<div class='p-3 bg-light min-height-430 rounded'>";
+                        echo "<div class='col-md-6 answerContainer'>";
+                            echo "<div class='padding-30 bg-light min-height-100 rounded'>";
                                 echo "<div id='counter'></div>";
-                                echo "<div class='row'><button type='submit' class='btn btn-primary' name='submitAnswer'>SUBMIT ANSWER</button></div>";
+                                echo "<button type='submit' class='btn btn-primary' name='submitAnswer'>SUBMIT ANSWER</button>";
                             echo "</div>";
                         echo "</div>";
                     echo "</div>";
@@ -146,12 +187,12 @@ if (isset($_POST['submitAnswer'])) {
                 include("includes/footer.php");
                 echo "</form>";
             }
-        }
         ?>
     </main>
     <script>
+        <?php echo $exam->getExamDuration()?>;
         // set the date we're counting down to
-        var target_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0).getTime();
+        //var target_date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0).getTime();
 
         // variables for time units
         var minutes, seconds;

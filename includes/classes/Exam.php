@@ -44,6 +44,17 @@ class Exam
         }
     }
 
+    public function retrievePublicExams() {
+        $query = mysqli_query($this->con, "SELECT examID, examName FROM exams WHERE examVisibility='PUBLIC'");
+        $result_set = array();
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $result_set[] = $row;
+        }
+
+        return $result_set;
+    }
+
     public function createExam(
         $examName,
         $examVisibility,
@@ -77,14 +88,14 @@ class Exam
         $this->examID = $examID;
     }
 
-    public function getQuestions()
+    public function getQuestions($examID)
     {
-
-        $results = mysqli_query($this->con, "SELECT * FROM questions WHERE examID=$this->examID ORDER BY orderNumber ASC");
+        $results = mysqli_query($this->con, "SELECT * FROM questions WHERE examID='$examID' ORDER BY orderNumber ASC");
         $result_set = array();
-
-        while ($row = mysqli_fetch_assoc($results)) {
-            $result_set[] = $row;
+        if ($results) {
+            while ($row = mysqli_fetch_assoc($results)) {
+                $result_set[] = $row;
+            }
         }
 
         return $result_set;
@@ -108,6 +119,10 @@ class Exam
 
     public function getChoicesCount() {
         return $this->choicesCount;
+    }
+    
+    public function getExamDuration() {
+        return $this->examDuration;
     }
 
     public function getCreator() {

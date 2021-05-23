@@ -6,6 +6,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/quick-exam-online/dashboard.php">Home</a>
                     </li>
+                    <?php
+                        if ($_SESSION['userRoleLoggedIn'] == 'TEST_CREATOR') {
+                            echo "<li class='nav-item'>
+                                <a class='nav-link text-white' href='create-exam.php'>Create Exam</a>
+                            </li>";
+                        }
+                    ?>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Usability Survey</a>
                     </li>
@@ -16,9 +23,7 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Donate</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <button class="btn btn-outline-secondary" type="submit">Logout</button>
-                </form>
+                <a class="btn btn-outline-secondary" href="logout.php">Logout</a>
             </div>
         </div>
     </nav>

@@ -4,8 +4,11 @@ if (isset($_POST['loginButton'])) {
     $password = $_POST['loginPassword'];
 
     $result = $account->login($username, $password);
-    if ($result == true) {
-        $_SESSION['userLoggedIn'] = $username;
+    if ($result) {
+        $user = $account->findUserByUsername($username);
+        $_SESSION['userLoggedIn'] = $user['id'];
+        $_SESSION['usernameLoggedIn'] = $user['username'];
+        $_SESSION['userRoleLoggedIn'] = $user['userRole'];
         header("Location: dashboard.php");
     }
 }

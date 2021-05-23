@@ -20,7 +20,7 @@ class Account {
         }
     }
 
-    public function register($username, $firstName, $lastName, $email, $email2, $password, $password2) {
+    public function register($username, $firstName, $lastName, $email, $email2, $password, $password2, $role) {
         $this->validateUsername($username);
         $this->validateFirstName($firstName);
         $this->validateLastName($lastName);
@@ -28,8 +28,7 @@ class Account {
         $this->validatePasswords($password, $password2);
 
         if(empty($this->errorArray) == true) {
-            //Insert to db
-            return $this->insertUserDetails($username, $firstName, $lastName, $email, $password);
+            return $this->insertUserDetails($username, $firstName, $lastName, $email, $password, $role);
         } else {
             return false;
         }
@@ -42,15 +41,35 @@ class Account {
         return "<span class='errorMessage'>$error<span>";
     }
 
-    private function insertUserDetails($un, $fn, $ln, $em, $pw) {
+    private function insertUserDetails($un, $fn, $ln, $em, $pw, $role) {
         $encryptedPw = md5($pw);
         $date = date("Y-m-d H:i:s");
         $profilePic = "assets/images/profile-pics/florence.jpg";
         $result = mysqli_query($this->con, "INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic) 
-            VALUES ('$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
-        echo "INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic) 
-        VALUES ('$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')";
-        return $result;
+            VALUES ('$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic', '$role')");
+        
+        $stmt = mysqli_stmt_init($this->con);
+        $sql = "INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic, userRole) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        if (!mysqli_stmt_prepare($stmt, $sql)){
+            echo "SQL statement failed";
+        } else {
+            mysqli_stmt_bind_param($stmt, "ssssssss", $un, $fn, $ln, $em, $encryptedPw, $date, $profilePic, $role);
+            return mysqli_stmt_execute($stmt);
+        }    
+        
+        return false;
+    }
+
+    public function findUserByUsername($un) {
+        $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$un'");
+        return mysqli_fetch_array($query);
+    }
+
+    public function findUserByID($userID) {
+        $query = mysqli_query($this->con, "SELECT * FROM users WHERE id='$userID'");
+        return mysqli_fetch_array($query);
     }
 
     private function validateUsername($un) {
@@ -115,19 +134,3 @@ class Account {
         }
     }
 }
-
-
-
-
-
-?>
-
-
-
-
-
-
-
-
-
-
